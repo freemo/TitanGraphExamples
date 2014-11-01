@@ -2,8 +2,10 @@ package com.syncleus.titangraph.example;
 
 import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.gremlin.groovy.Gremlin;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
-import com.tinkerpop.pipes.PipeFunction;
+import com.tinkerpop.pipes.*;
+import com.tinkerpop.pipes.util.iterators.SingleIterator;
 import org.junit.*;
 
 import java.util.List;
@@ -40,7 +42,7 @@ public class GremlinTest {
         final TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");
         final GremlinPipeline<Vertex,Vertex> pipe = new GremlinPipeline<Vertex,Vertex>();
         final Vertex jupiterVertex = godGraph.getVertices("name", "jupiter").iterator().next();
-        final GremlinPipeline brotherNamesPipe = new GremlinPipeline(jupiterVertex).out("brother").property("name").filter(new PipeFunction<String,Boolean>() {
+        final GremlinPipeline brotherNamesPipe = new GremlinPipeline(jupiterVertex).out("brother").property("name").filter(new PipeFunction<String, Boolean>() {
             public Boolean compute(String argument) {
                 return argument.startsWith("p");
             }
@@ -52,5 +54,16 @@ public class GremlinTest {
 
         //check each brothers name to make sure both of them matchone of the known brothers names
         Assert.assertEquals( "pluto", brotherNames.get(0).toString() );
+    }
+
+    @Test
+    public void testGremlinCompiled() {
+        final TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");
+        final Vertex jupiterVertex = godGraph.getVertices("name", "jupiter").iterator().next();
+        final Pipe pipe = Gremlin.compile("_().out('brother').name");
+        pipe.setStarts(new SingleIterator<Vertex>(jupiterVertex));
+        for(Object name : pipe) {
+            Assert.assertTrue(("pluto".equals(name.toString())) || ("neptune".equals(name.toString())));
+        }
     }
 }
