@@ -34,9 +34,5 @@ public class TitanGodsTest
         TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");
         Iterable<Vertex> skyVertices = godGraph.getVertices("name", "sky");
         assertTrue("no sky vertices found", skyVertices.iterator().hasNext());
-
-        for( Vertex skyVertex : skyVertices ) {
-            skyVertex.
-        }
     }
 }
