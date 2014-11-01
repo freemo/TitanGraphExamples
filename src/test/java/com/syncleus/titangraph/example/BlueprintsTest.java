@@ -4,7 +4,7 @@ import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
 import org.junit.*;
 
-public class TitanGodsTest {
+public class BlueprintsTest {
     @Test
     public void testApp() {
         TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");

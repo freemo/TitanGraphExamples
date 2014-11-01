@@ -112,6 +112,7 @@ public class TitanGods {
         jupiter.addEdge("brother", neptune);
         jupiter.addEdge("brother", pluto);
 
+        neptune.addEdge("father", saturn);
         neptune.addEdge("lives", sea).setProperty("reason", "loves waves");
         neptune.addEdge("brother", jupiter);
         neptune.addEdge("brother", pluto);
@@ -122,6 +123,7 @@ public class TitanGods {
         ElementHelper.setProperties(hercules.addEdge("battled", hydra), "time", 2, "place", Geoshape.point(37.7f, 23.9f));
         ElementHelper.setProperties(hercules.addEdge("battled", cerberus), "time", 12, "place", Geoshape.point(39f, 22f));
 
+        pluto.addEdge("father", saturn);
         pluto.addEdge("brother", jupiter);
         pluto.addEdge("brother", neptune);
         pluto.addEdge("lives", tartarus).setProperty("reason", "no fear of death");
