@@ -117,5 +117,10 @@
             <artifactId>titan-es</artifactId>
             <version>0.4.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.tinkerpop.gremlin</groupId>
+            <artifactId>gremlin-java</artifactId>
+            <version>2.6.0</version>
+        </dependency>
     </dependencies>
 </project>
