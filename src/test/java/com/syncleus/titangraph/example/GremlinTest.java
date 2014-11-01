@@ -38,7 +38,7 @@ public class GremlinTest {
     }
 
     @Test
-    public void testGremlinFindBrothersFirstLetterP() {
+    public void testGremlinFindBrothersFilterLetter() {
         final TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");
         final GremlinPipeline<Vertex,Vertex> pipe = new GremlinPipeline<Vertex,Vertex>();
         final Vertex jupiterVertex = godGraph.getVertices("name", "jupiter").iterator().next();
@@ -54,6 +54,49 @@ public class GremlinTest {
 
         //check each brothers name to make sure both of them matchone of the known brothers names
         Assert.assertEquals( "pluto", brotherNames.get(0).toString() );
+    }
+
+    @Test
+    public void testGremlinFindBrothersRemoveLetter() {
+        final TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");
+        final GremlinPipeline<Vertex,Vertex> pipe = new GremlinPipeline<Vertex,Vertex>();
+        final Vertex jupiterVertex = godGraph.getVertices("name", "jupiter").iterator().next();
+        final GremlinPipeline brotherNamesPipe = new GremlinPipeline(jupiterVertex).out("brother").property("name").transform(new PipeFunction<String, String>() {
+            public String compute(String argument) {
+                return argument.replaceAll("o", "");
+            }
+        });
+        final List brotherNames = brotherNamesPipe.next(100);
+
+        //we know jupiter only has two brothers
+        Assert.assertEquals(brotherNames.size(), 2);
+
+        //check each brothers name to make sure both of them matchone of the known brothers names
+        Assert.assertTrue(("plut".equals(brotherNames.get(0).toString())) || ("neptune".equals(brotherNames.get(0).toString())));
+        Assert.assertTrue( ("plut".equals(brotherNames.get(1).toString())) || ("neptune".equals(brotherNames.get(1).toString())) );
+    }
+
+    @Test
+    public void testGremlinFindBrothersRemoveAndFilterLetter() {
+        final TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");
+        final GremlinPipeline<Vertex,Vertex> pipe = new GremlinPipeline<Vertex,Vertex>();
+        final Vertex jupiterVertex = godGraph.getVertices("name", "jupiter").iterator().next();
+        final GremlinPipeline brotherNamesPipe = new GremlinPipeline(jupiterVertex).out("brother").property("name").transform(new PipeFunction<String, String>() {
+            public String compute(String argument) {
+                return argument.replaceAll("o", "");
+            }
+        }).filter(new PipeFunction<String, Boolean>() {
+            public Boolean compute(String argument) {
+                return argument.startsWith("p");
+            }
+        });
+        final List brotherNames = brotherNamesPipe.next(100);
+
+        //we know jupiter only has two brothers
+        Assert.assertEquals(brotherNames.size(), 1);
+
+        //check each brothers name to make sure both of them matchone of the known brothers names
+        Assert.assertEquals( "plut", brotherNames.get(0).toString() );
     }
 
     @Test
