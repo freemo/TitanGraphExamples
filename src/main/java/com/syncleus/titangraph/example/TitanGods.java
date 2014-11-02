@@ -118,7 +118,7 @@ public class TitanGods {
         neptune.addEdge("brother", pluto);
 
         hercules.addEdge("father", jupiter);
-        hercules.addEdge("mother", alcmene);
+        hercules.addEdge("lives", sky).setProperty("reason", "loves heights");
         ElementHelper.setProperties(hercules.addEdge("battled", nemean), "time", 1, "place", Geoshape.point(38.1f, 23.7f));
         ElementHelper.setProperties(hercules.addEdge("battled", hydra), "time", 2, "place", Geoshape.point(37.7f, 23.9f));
         ElementHelper.setProperties(hercules.addEdge("battled", cerberus), "time", 12, "place", Geoshape.point(39f, 22f));
@@ -130,6 +130,7 @@ public class TitanGods {
         pluto.addEdge("pet", cerberus);
 
         cerberus.addEdge("lives", tartarus);
+        ElementHelper.setProperties(cerberus.addEdge("battled", alcmene), "time", 5, "place", Geoshape.point(68.1f, 13.3f));
 
         // commit the transaction to disk
         graph.commit();
