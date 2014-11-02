@@ -1,9 +1,9 @@
 package com.syncleus.titangraph.example.titangods;
 
-import com.syncleus.titangraph.example.titangods.TitanGods;
-import com.syncleus.titangraph.example.titangods.TitanGods.God;
 import com.thinkaurelius.titan.core.TitanGraph;
+import com.tinkerpop.blueprints.*;
 import com.tinkerpop.frames.*;
+import com.tinkerpop.frames.modules.*;
 import com.tinkerpop.frames.modules.gremlingroovy.GremlinGroovyModule;
 import com.tinkerpop.frames.modules.javahandler.JavaHandlerModule;
 import org.junit.*;
@@ -32,5 +32,40 @@ public class FramesTest {
         final God god = gods.iterator().next();
         Assert.assertEquals(god.getName(), "saturn");
         Assert.assertTrue(god.isAgeEven());
+    }
+
+    @Test
+    public void testFramesTypeResolver() {
+        final TitanGraph godGraph = TitanGods.create("./target/TitanTestDB");
+
+        final TypeResolver resolver = new TypeResolver() {
+
+            @Override
+            public Class<?>[] resolveTypes(final Vertex v, final Class<?> defaultType) {
+                if( v.getPropertyKeys().contains("other") ) {
+                    return new Class<?>[]{LocationExtended.class};
+                }
+                return new Class<?>[0];
+            }
+
+            @Override
+            public Class<?>[] resolveTypes(final Edge e, final Class<?> defaultType) {
+                return new Class<?>[0];
+            }
+        };
+
+        final Module resolverModule = new AbstractModule() {
+            public void doConfigure(FramedGraphConfiguration config) {
+                config.addTypeResolver(resolver);
+            }
+        };
+
+        final FramedGraphFactory factory = new FramedGraphFactory(new JavaHandlerModule(), new GremlinGroovyModule(), resolverModule);
+
+        final FramedGraph framedGraph = factory.create(godGraph);
+
+        final Iterable<Location> skys = (Iterable<Location>) framedGraph.getVertices("name", "sky", Location.class);
+        final Location sky = skys.iterator().next();
+        Assert.assertTrue(sky instanceof LocationExtended);
     }
 }

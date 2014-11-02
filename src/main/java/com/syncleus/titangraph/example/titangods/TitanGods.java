@@ -72,7 +72,7 @@ public class TitanGods {
         saturn.setProperty("type", "titan");
 
         Vertex sky = graph.addVertex(null);
-        ElementHelper.setProperties(sky, "name", "sky", "type", "location");
+        ElementHelper.setProperties(sky, "name", "sky", "type", "location", "other", "more useless info");
 
         Vertex sea = graph.addVertex(null);
         ElementHelper.setProperties(sea, "name", "sea", "type", "location");
