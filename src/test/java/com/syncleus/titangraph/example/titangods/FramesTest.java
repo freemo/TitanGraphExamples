@@ -1,6 +1,7 @@
-package com.syncleus.titangraph.example;
+package com.syncleus.titangraph.example.titangods;
 
-import com.syncleus.titangraph.example.frames.God;
+import com.syncleus.titangraph.example.titangods.TitanGods;
+import com.syncleus.titangraph.example.titangods.TitanGods.God;
 import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.frames.*;
 import com.tinkerpop.frames.modules.gremlingroovy.GremlinGroovyModule;

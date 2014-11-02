@@ -1,4 +1,4 @@
-package com.syncleus.titangraph.example.frames;
+package com.syncleus.titangraph.example.titangods;
 
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.frames.*;

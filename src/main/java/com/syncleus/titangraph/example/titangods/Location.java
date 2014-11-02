@@ -1,4 +1,4 @@
-package com.syncleus.titangraph.example.frames;
+package com.syncleus.titangraph.example.titangods;
 
 import com.tinkerpop.frames.*;
 import com.tinkerpop.frames.annotations.gremlin.GremlinGroovy;

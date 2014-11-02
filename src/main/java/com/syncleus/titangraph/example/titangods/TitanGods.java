@@ -1,4 +1,4 @@
-package com.syncleus.titangraph.example;
+package com.syncleus.titangraph.example.titangods;
 
 import com.thinkaurelius.titan.core.TitanFactory;
 import com.thinkaurelius.titan.core.TitanGraph;
@@ -18,9 +18,8 @@ import static com.thinkaurelius.titan.graphdb.configuration.GraphDatabaseConfigu
 
 /**
  * Example Graph factory that creates a {@link TitanGraph} based on roman mythology.
- * Used in the documentation examples and tutorials.
- *
- * @author Marko A. Rodriguez (http://markorodriguez.com)
+ * Used in the documentation examples and tutorials on the TitanGraph site. This is
+ * An acyclic graph with a tree structure.
  */
 public class TitanGods {
 
